@@ -1,0 +1,11 @@
+install:
+    - choco install gitversion.portable -pre -y
+    - @powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{$Branch='dev';iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.ps1'))}"
+
+before_build:
+    - dnvm upgrade
+    - dnu restore
+
+build:
+    - dnu build
+    project: src/Starter.Web/project.json
