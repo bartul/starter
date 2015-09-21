@@ -4,4 +4,4 @@ install:
   - dnvm upgrade
   - dnu restore --no-cache
 script:
-  - dnu publish src\Starter.Web\ -o buildout --configuration Release --no-source 
+  - dnu publish src/Starter.Web/ -o buildout --configuration Release --no-source 
