@@ -6,5 +6,5 @@ install:
 script:
   - dnu restore --no-cache
   - dnu publish src/Starter.Web/ -o buildout --configuration Release --no-source
-  - tar -cvzf starter_web${TRAVIS_BUILD_NUMBER}.tar.gz buildout
+  - tar -cvzf starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz buildout
   - ls -al
