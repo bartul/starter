@@ -2,4 +2,4 @@
 
 a good place to start a project. Or just use yo ;)
 
-Travis: [![Travis](https://travis-ci.org/bartul/starter?branch=master)](https://travis-ci.org/bartul/starter)
+Travis: [![Travis](https://travis-ci.org/bartul/starter.svg?branch=master)](https://travis-ci.org/bartul/starter)

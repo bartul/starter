@@ -8,3 +8,13 @@ script:
   - dnu publish src/Starter.Web/ -o buildout --configuration Release --no-source
   - tar -cvzf starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz buildout
   - ls -al
+before_deploy:
+  - cp starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz starter-web-${TRAVIS_TAG}.tar.gz
+  - ls -al
+deploy:
+  provider: release
+  api_key: $GITHUB_OAUTH_TOKEN
+  file: starter-web-${TRAVIS_TAG}.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
