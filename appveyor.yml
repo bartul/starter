@@ -14,7 +14,7 @@ build_script:
   - ps: ls
 test: off 
 deploy:
-  release: starter-web-$(APPVEYOR_REPO_TAG_NAME)
+  release: $(APPVEYOR_REPO_TAG_NAME)
   description: 'Starter Web $(APPVEYOR_REPO_TAG_NAME)'
   provider: GitHub
   auth_token: $(GITHUB_OAUTH_TOKEN)
