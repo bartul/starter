@@ -13,6 +13,7 @@ build_script:
 after_build:
   - 7z.exe a starter-web.zip buildout\
   - ps: ls
+  - ps: Push-AppveyorArtifact starter-web.zip
 test: off 
 deploy:
   description: 'Starter $(APPVEYOR_REPO_TAG_NAME)'
