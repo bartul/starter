@@ -6,5 +6,4 @@ before_build:
   - dnu restore --no-cache
 build:
   - dnu publish src\Starter.Web\ -o buildout --configuration Release --no-source
-  - dir
 #  project: src/Starter.Web/project.json
