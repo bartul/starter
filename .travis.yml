@@ -12,7 +12,7 @@ before_deploy:
   - cp starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz starter-web-${TRAVIS_TAG}.tar.gz
   - ls -al
 deploy:
-  provider: release
+  provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
   file: starter-web-${TRAVIS_TAG}.tar.gz
   skip_cleanup: true
