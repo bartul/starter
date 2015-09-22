@@ -17,8 +17,7 @@ deploy:
   release: starter-web-$(APPVEYOR_REPO_TAG_NAME)
   description: 'Starter Web $(APPVEYOR_REPO_TAG_NAME)'
   provider: GitHub
-  auth_token:
-    secure: $(GITHUB_OAUTH_TOKEN)
+  auth_token: $(GITHUB_OAUTH_TOKEN)
   artifact: starter-web-%GITVERSION_SEMVER%.zip
   draft: false
   prerelease: false
