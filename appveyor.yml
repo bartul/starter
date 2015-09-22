@@ -18,7 +18,7 @@ deploy:
   description: 'Starter Web $(APPVEYOR_REPO_TAG_NAME)'
   provider: GitHub
   auth_token: $(GITHUB_OAUTH_TOKEN)
-  artifact: *.zip
+  artifact: /.*\.zip/
   draft: false
   prerelease: false
   on:
