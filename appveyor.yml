@@ -1,11 +1,27 @@
 install:
-    - choco install gitversion.portable -pre -y
-    - @powershell -NoProfile -ExecutionPolicy unrestricted -Command "&{$Branch='dev';iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.ps1'))}"
-
+  - cinst gitversion.portable -pre -y
+  - cinst 7zip.commandline -y
+  - git config --global core.autocrlf true
+  - ps: "&{$Branch='dev';iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.ps1'))}"
+  - ps: ~\.dnx\bin\dnvm install latest
 before_build:
-    - dnvm upgrade
-    - dnu restore
-
-build:
-    - dnu build
-    project: src/Starter.Web/project.json
+  - dnu restore --no-cache
+  - ps: gitversion /l console /output buildserver /updateAssemblyInfo
+  - ps: ls
+build_script:
+  - dnu publish src\Starter.Web\ -o buildout --configuration Release --no-source
+  - 7z.exe a starter-web-%GITVERSION_SEMVER%.zip buildout\
+  - ps: ls
+test: off 
+deploy:
+  release: starter-web-$(APPVEYOR_REPO_TAG_NAME)
+  description: 'Starter Web $(APPVEYOR_REPO_TAG_NAME)'
+  provider: GitHub
+  auth_token:
+    secure: $(GITHUB_OAUTH_TOKEN)
+  artifact: starter-web-%GITVERSION_SEMVER%.zip
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    appveyor_repo_tag: true        # deploy on tag push only
