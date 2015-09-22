@@ -1,16 +1,16 @@
 install:
-  - choco install gitversion.portable -pre -y
+  - cinst gitversion.portable -pre -y
+  - cinst 7zip.commandline -y
   - git config --global core.autocrlf true
   - ps: "&{$Branch='dev';iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.ps1'))}"
   - ps: ~\.dnx\bin\dnvm install latest
 before_build:
   - dnu restore --no-cache
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-  - echo %GITVERSION_MAJOR%
-  - echo %GITVERSION_SEMVER%
   - ps: ls
 build_script:
   - dnu publish src\Starter.Web\ -o buildout --configuration Release --no-source
+  - 7z.exe a starter-web-%GITVERSION_SEMVER%.zip buildout\
   - ps: ls
 test: off 
 deploy: off 
