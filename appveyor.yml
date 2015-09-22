@@ -1,10 +1,10 @@
 install:
 #  - choco install gitversion.portable -pre -y
-  - ps: &{$Branch='dev';iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.ps1'))}
+  - ps: "&{$Branch='dev';iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.ps1'))}"
 before_build:
   - dnvm upgrade
   - dnu restore --no-cache
 build:
-  - dnu publish src/Starter.Web/ -o buildout --configuration Release --no-source
+  - dnu publish src\Starter.Web\ -o buildout --configuration Release --no-source
   - dir
 #  project: src/Starter.Web/project.json
