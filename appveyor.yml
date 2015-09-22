@@ -10,7 +10,7 @@ before_build:
   - ps: ls
 build_script:
   - dnu publish src\Starter.Web\ -o buildout --configuration Release --no-source
-  - 7z.exe a starter-web-%GITVERSION_SEMVER%.zip buildout\
+  - 7z.exe a starter-web.zip buildout\
   - ps: ls
 test: off 
 deploy:
@@ -18,7 +18,7 @@ deploy:
   description: 'Starter Web $(APPVEYOR_REPO_TAG_NAME)'
   provider: GitHub
   auth_token: $(GITHUB_OAUTH_TOKEN)
-  artifact: /.*\.zip/
+  artifact: starter-web.zip
   draft: false
   prerelease: false
   on:
