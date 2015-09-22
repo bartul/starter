@@ -5,8 +5,9 @@ install:
   - ps: ~\.dnx\bin\dnvm install latest
 before_build:
   - dnu restore --no-cache
-  - nuget restore
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
+  - echo %GITVERSION_MAJOR%
+  - echo %GITVERSION_SEMVER%
   - ps: ls
 build_script:
   - dnu publish src\Starter.Web\ -o buildout --configuration Release --no-source
