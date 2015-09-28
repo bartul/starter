@@ -1,8 +1,8 @@
 language: CSharp
 install:
-  - set MONO_THREADS_PER_CPU 2000
   - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
   - dnvm upgrade
+  - set MONO_THREADS_PER_CPU 2000
 script:
   - dnu restore --no-cache
   - dnu publish src/Starter.Web/ -o buildout --configuration Release --no-source
