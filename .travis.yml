@@ -2,14 +2,14 @@ language: CSharp
 install:
   - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
   - dnvm upgrade
-  - set MONO_THREADS_PER_CPU 2000
+  - export MONO_THREADS_PER_CPU=2000
 script:
   - dnu restore --no-cache
   - dnu publish src/Starter.Web/ -o buildout --configuration Release --no-source
   - tar -cvzf starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz buildout
   - ls -al
 before_deploy:
-  - cp starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz starter-web.tar.gz # Add ${TRAVIS_TAG} if you like 
+  - cp starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz starter-web.tar.gz # Add ${TRAVIS_TAG} if you like
   - ls -al
 deploy:
   provider: releases
