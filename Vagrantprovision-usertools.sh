@@ -2,10 +2,10 @@
 
 # Install dnx
 echo "##### Install dnx #####"
-set MONO_THREADS_PER_CPU 2000
+export MONO_THREADS_PER_CPU=2000
 curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh
 source ~/.dnx/dnvm/dnvm.sh
-dnvm install latest -f -y 
+dnvm install latest -f -y
 dnvm install latest -f -y -r coreclr
 
 # Install atom
