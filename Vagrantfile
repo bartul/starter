@@ -6,12 +6,10 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "box-cutter/ubuntu1404-desktop"
   config.vm.provision "shell" do |s|
-    s.path = "provision.sh"
+    s.path = "Vagrantprovision-runtime.sh"
+  end
+  config.vm.provision "shell" do |s|
+    s.path = "Vagrantprovision-usertools.sh"
     s.privileged = false
   end
-
-  config.vm.synced_folder "../", "/code"
-
-  config.ssh.username = "vagrant"
-
 end

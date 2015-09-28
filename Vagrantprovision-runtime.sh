@@ -12,7 +12,7 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A1
 echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
 sudo apt-get update
 sudo apt-get install mono-complete -y
-set MONO_THREADS_PER_CPU 2000
+
 
 # Install libtool
 echo "##### Install libtool #####"
@@ -25,22 +25,3 @@ sudo make
 sudo make install
 sudo rm -rf /usr/local/src/libuv-1.4.2 && cd ~/
 sudo ldconfig
-
-# Install dnx
-echo "##### Install dnx #####"
-curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh
-source /home/vagrant/.dnx/dnvm/dnvm.sh
-dnvm install latest
-
-
-# Install atom
-echo "##### Install atom #####"
-curl -sSL https://github.com/atom/atom/releases/download/v1.0.19/atom-amd64.deb > ~/atom-amd64.deb
-dpkg --install ~/atom-amd64.deb
-rm ~/atom-amd64.deb
-apm upgrade
-
-# Install atom addins
-echo "##### Install atom addins #####"
-sudo -u vagrant apm install omnisharp-atom
-sudo -u vagrant apm install ionide-installer
