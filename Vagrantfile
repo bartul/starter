@@ -1,12 +1,19 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure(2) do |config|
-  config.vm.hostname = "starter"
+Vagrant.require_version ">= 1.1.0"
 
-  config.vm.box = "ubuntu/vivid64" # Official Ubuntu Server 15.04 (Vivid Vervet)
+Vagrant.configure(2) do |config|
+
+  config.vm.hostname = "starter"
+  config.vm.box = "bento/ubuntu-14.04"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
   config.vm.provider "parallels" do |p, override|
-    override.vm.box = "parallels/ubuntu-14.04"
+    # Guest Tools are unavailable.
+    p.check_guest_tools = false
+    p.functional_psf    = false
+    p.name = "starter"
   end
 
   config.vm.provision "shell" do |s|
