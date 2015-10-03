@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.hostname = "starter"
   config.vm.box = "bento/ubuntu-14.04"
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  # config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.provider "parallels" do |p, override|
     # Guest Tools are unavailable.
