@@ -1,26 +1,34 @@
 #!/usr/bin/env bash
 
 # Refresh basics
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt-get install git -y
-sudo apt-get install unzip -y
-sudo apt-get install curl -y
 
-echo "##### Install mono #####"
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
-sudo apt-get update
-sudo apt-get install mono-complete -y
+export DNX_VERSION=1.0.0-rc1-final
+export DNX_USER_HOME=/opt/DNX_BRANCH
+export DNX_RUNTIME_ID=ubuntu.14.04-x64
 
+echo "##### Install dnx #####"
+sudo apt-get -qq update 
+sudo apt-get -qqy install unzip curl libicu-dev libunwind8 gettext libssl-dev libcurl3-gnutls zlib1g
+sudo rm -rf /var/lib/apt/lists/*
+
+sudo curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_USER_HOME=$DNX_USER_HOME DNX_BRANCH=v$DNX_VERSION sh
+sudo bash -c "source $DNX_USER_HOME/dnvm/dnvm.sh \
+	&& dnvm install $DNX_VERSION -alias default -r coreclr \
+	&& dnvm alias default | xargs -i ln -s $DNX_USER_HOME/runtimes/{} $DNX_USER_HOME/runtimes/default"
 
 echo "##### Install libuv #####"
-sudo apt-get install -y automake libtool
-curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | tar zxfv - -C /usr/local/src
-cd /usr/local/src/libuv-1.4.2
-sudo sh autogen.sh
-sudo ./configure
-sudo make
-sudo make install
-sudo rm -rf /usr/local/src/libuv-1.4.2 && cd ~/
+LIBUV_VERSION=1.4.2
+sudo apt-get -qq update
+sudo apt-get -qqy install autoconf automake build-essential libtool
+sudo curl -sSL https://github.com/libuv/libuv/archive/v${LIBUV_VERSION}.tar.gz | tar zxfv - -C /usr/local/src
+cd /usr/local/src/libuv-$LIBUV_VERSION
+sudo sh autogen.sh && ./configure && make && make install
+sudo rm -rf /usr/local/src/libuv-$LIBUV_VERSION
 sudo ldconfig
+sudo apt-get -y purge autoconf automake build-essential libtool
+sudo apt-get -y autoremove
+sudo apt-get -y clean
+sudo rm -rf /var/lib/apt/lists/*
+
+export PATH=$PATH:$DNX_USER_HOME/runtimes/default/bin
+export MONO_THREADS_PER_CPU=50
