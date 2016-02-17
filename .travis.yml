@@ -8,9 +8,10 @@ install:
 script:
   - cd src/Starter.Web
   - dotnet restore
-  - dotnet compile
+  - otnet compile -c Release -n
   - tar -cvzf starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz bin/
   - ls -al
+  - tree
 before_deploy:
   - cp starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz starter-web.tar.gz # Add ${TRAVIS_TAG} if you like
   - ls -al
