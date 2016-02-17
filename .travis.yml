@@ -17,7 +17,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: starter-web.tar.gz # Add ${TRAVIS_TAG} if you like
+  file: bin/Release/dnxcore50/ubuntu.14.04-x64/native/Starter.Web # starter-web.tar.gz # Add ${TRAVIS_TAG} if you like
   skip_cleanup: true
   on:
     tags: true
