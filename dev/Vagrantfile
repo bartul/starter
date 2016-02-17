@@ -20,8 +20,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell" do |s|
     s.path = "Vagrantprovision-runtime.sh"
   end
-  config.vm.provision "shell" do |s|
-    s.privileged = false
-    s.path = "Vagrantprovision-usertools.sh"
-  end
+#  config.vm.provision "shell" do |s|
+#    s.privileged = false
+#    s.path = "Vagrantprovision-usertools.sh"
+#  end
 end

@@ -1,12 +1,15 @@
 language: CSharp
+sudo: true
 install:
-  - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
-  - dnvm upgrade
-  - set MONO_THREADS_PER_CPU 2000
+  - sudo sh -c 'echo "deb [arch=amd64] http://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+  - sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+  - sudo apt-get update
+  - sudo apt-get install -y dotnet=1.0.0.001331-1
 script:
-  - dnu restore --no-cache
-  - dnu publish src/Starter.Web/ -o buildout --configuration Release --no-source
-  - tar -cvzf starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz buildout
+  - cd src/Starter.Web
+  - dotnet restore
+  - dotnet compile -c Release -n
+  - tar -cvzf starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz bin/
   - ls -al
 before_deploy:
   - cp starter-web-${TRAVIS_BUILD_NUMBER}.tar.gz starter-web.tar.gz # Add ${TRAVIS_TAG} if you like
@@ -14,7 +17,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: starter-web.tar.gz # Add ${TRAVIS_TAG} if you like
+  file: bin/Release/dnxcore50/ubuntu.14.04-x64/native/Starter.Web # starter-web.tar.gz # Add ${TRAVIS_TAG} if you like
   skip_cleanup: true
   on:
     tags: true
